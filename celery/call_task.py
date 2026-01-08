@@ -8,7 +8,7 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # 导入任务
-from app.celery.ctasks import add, multiply
+from celery.ctasks import add, multiply
 
 
 def test_celery():
