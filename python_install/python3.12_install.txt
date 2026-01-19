@@ -1,0 +1,74 @@
+# 下载Python
+官网下载压缩包：
+![[Python-3.12.12.tgz]]
+
+# 执行命令
+
+1.安装python构建依赖
+```
+
+sudo apt update
+sudo apt install -y \
+    build-essential \
+    wget curl \
+    zlib1g-dev \
+    libncurses-dev \
+    libgdbm-dev \
+    libnss3-dev \
+    libssl-dev \
+    libreadline-dev \
+    libffi-dev \
+    libsqlite3-dev \
+    libbz2-dev \
+    liblzma-dev \
+    tk-dev \
+	libgdbm-dev \
+	libdb-dev
+```
+2. 上传压缩包 解压缩
+```
+mkdir python312
+scp -P 8003 /Users/yuzhenling/harbour/qianyuan/install/Python-3.12.12.tgz monster@nps.hystudio.cn:/home/monster/python312
+
+tar -zxvf Python-3.12.12.tgz
+```
+ 3. 执行安装命令
+ ```
+ cd Python312
+
+#编译配置
+./configure --enable-optimizations --prefix=/usr/local/python3.12.12
+
+
+make -j$(nproc)
+sudo make altinstall
+echo 'export PATH=/usr/local/python3.12.12/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+
+python3.12 -V
+
+说明：
+1.--enable-optimizations：开启一些优化，会更快但编译时间更长
+2.--prefix：指定安装目录，避免覆盖系统自带的 Python
+3.用 altinstall 而不是 install，避免覆盖系统默认的 /usr/bin/python3。
+ ```
+4. 配置所有用户
+```
+把 bin 目录加到所有用户的 PATH🚀
+方法一：系统级 PATH 配置（推荐）
+1. 确认 Python 已经安装在 /usr/local/python3.12.12
+   ls /usr/local/python3.9/bin/python3.12.12
+2. 创建一个 profile.d 配置文件 让所有用户自动加载这个 PATH：
+
+   sudo tee /etc/profile.d/python3.12.12.sh > /dev/null <<'EOF'
+export PATH=/usr/local/python3.12.12/bin:$PATH
+EOF
+
+3. 让配置立即生效
+         source /etc/profile
+```
+
+# 打包编译好的备份
+![[python3.12.12.tar 1.gz]]
+
+
